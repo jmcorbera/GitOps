@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ApiRest.Net8.API
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ApiRest.Net8.API
+  template:
+    metadata:
+      labels:
+        app: ApiRest.Net8.API
+    spec:
+      containers:
+      - name: ApiRest.Net8.API
+        image: https://github.com/jmcorbera/ApiRest.Net8.API:latest
+        ports:
+          - containerPort: 80
+        env:
+          - name: ConnectionStrings__DefaultConnection
+            value: server=mysql;port=3306;database=weatherdb;user=root;password=root
