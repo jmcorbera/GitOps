@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ApiRest.Net8.API
+  name: apirest-net8-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ApiRest.Net8.API
+      app: apirest-net8-api
   template:
     metadata:
       labels:
-        app: ApiRest.Net8.API
+        app: apirest-net8-api
     spec:
       containers:
-      - name: ApiRest.Net8.API
+      - name: apirest-net8-api
         image: <DOCKER_USERNAME>/ApiRest.Net8.API:development
         ports:
           - containerPort: 80

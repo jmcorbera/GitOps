@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ApiRest.Net8.API
+  name: apirest-net8-api
 spec:
   selector:
-    app: ApiRest.Net8.API
+    app: apirest-net8-api
   ports:
     - protocol: TCP
       port: 80
