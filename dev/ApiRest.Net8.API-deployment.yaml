@@ -33,5 +33,3 @@ spec:
               secretKeyRef:
                 name: mysql-credentials
                 key: password  # Se toma del secret
-          - name: ConnectionStrings__DefaultConnection
-            value: "server=mysql;port=3306;database=${DB_DATABASE};user=${DB_USER};password=${DB_PASSWORD}"
