@@ -16,7 +16,7 @@ spec:
       - name: apirest-net8-api
         image: juanmcorbera/apirest-net8-api:development 
         ports:
-          - containerPort: 80
+          - containerPort: 8080
         env:
           - name: DB_DATABASE
             valueFrom:
