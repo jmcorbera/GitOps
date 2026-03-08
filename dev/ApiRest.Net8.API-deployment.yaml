@@ -14,9 +14,24 @@ spec:
     spec:
       containers:
       - name: apirest-net8-api
-        image: <DOCKER_USERNAME>/ApiRest.Net8.API:development
+        image: juanmcorbera/ApiRest.Net8.API:development
         ports:
           - containerPort: 80
         env:
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: database  # Se toma del secret
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: user  # Se toma del secret
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: password  # Se toma del secret
           - name: ConnectionStrings__DefaultConnection
-            value: server=mysql;port=3306;database=$(DB_DATABASE);user=$(DB_USER);password=$(DB_PASSWORD)
+            value: "server=mysql;port=3306;database=${DB_DATABASE};user=${DB_USER};password=${DB_PASSWORD}"

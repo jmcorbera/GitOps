@@ -16,20 +16,50 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
-          - name: DB_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: mysql-credentials
-                key: database
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-credentials
-                key: password
           - name: DB_USER
             valueFrom:
               secretKeyRef:
                 name: mysql-credentials
-                key: user
+                key: password   # La contraseña para el usuario root
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: database   # El nombre de la base de datos a crear
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: user       # El nombre del usuario para acceder a la base de datos
         ports:
           - containerPort: 3306
+        volumeMounts:
+          - name: mysql-data
+            mountPath: /var/lib/mysql   # Donde MySQL guarda sus datos
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pvc    # Asegúrate de tener este PVC configurado
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  clusterIP: None   # Si usas "StatefulSets", si no, puede ser ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi   # Ajusta según el tamaño que necesites
