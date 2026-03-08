@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apirest-net8-api
-        image: juanmcorbera/apirest-net8-api:development
+        image: juanmcorbera/apirest-net8-api:development 
         ports:
           - containerPort: 80
         env:
