@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: ApiRest.Net8.API
-        image: https://github.com/jmcorbera/ApiRest.Net8.API:latest
+        image: <DOCKER_USERNAME>/ApiRest.Net8.API:development
         ports:
           - containerPort: 80
         env:
           - name: ConnectionStrings__DefaultConnection
-            value: server=mysql;port=3306;database=weatherdb;user=root;password=root
+            value: server=mysql;port=3306;database=$(DB_DATABASE);user=$(DB_USER);password=$(DB_PASSWORD)

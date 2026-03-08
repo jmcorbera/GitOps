@@ -16,9 +16,20 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: root
-          - name: MYSQL_DATABASE
-            value: weatherdb
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: database
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: password
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: user
         ports:
           - containerPort: 3306
