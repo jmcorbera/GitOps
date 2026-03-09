@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apirest-net8-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apirest-net8-api
+  template:
+    metadata:
+      labels:
+        app: apirest-net8-api
+    spec:
+      containers:
+      - name: apirest-net8-api
+        image: juanmcorbera/apirest-net8-api
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        envFrom:
+          - secretRef:
+              name: mysql-credentials
