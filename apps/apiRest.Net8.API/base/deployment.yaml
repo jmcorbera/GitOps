@@ -28,3 +28,6 @@ spec:
         envFrom:
           - secretRef:
               name: mysql-credentials
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Development"
