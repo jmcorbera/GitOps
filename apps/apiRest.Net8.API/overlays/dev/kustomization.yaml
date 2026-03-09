@@ -1,7 +1,13 @@
 resources:
-  - ../../base
+- ../../base
 
 nameSuffix: -dev
 
 patchesStrategicMerge:
 - patch.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: juanmcorbera/apirest-net8-api
+  newName: juanmcorbera/apirest-net8-api
+  newTag: development
