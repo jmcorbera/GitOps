@@ -1,21 +1,25 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: mysql
+
   template:
     metadata:
       labels:
         app: mysql
+
     spec:
       containers:
         - name: mysql
           image: mysql:8.0.32
           imagePullPolicy: IfNotPresent
+
           ports:
             - containerPort: 3306
 
@@ -33,7 +37,12 @@ spec:
             - name: mysql-data
               mountPath: /var/lib/mysql
 
-      volumes:
-        - name: mysql-data
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: hostpath
