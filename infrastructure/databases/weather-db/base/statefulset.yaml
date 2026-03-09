@@ -4,46 +4,38 @@ metadata:
   name: mysql
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: mysql
-
   template:
     metadata:
       labels:
         app: mysql
-
     spec:
       containers:
         - name: mysql
           image: mysql:8.0.32
           imagePullPolicy: IfNotPresent
-
           ports:
             - containerPort: 3306
-
           envFrom:
-          - secretRef:
-              name: mysql-credentials
-
+            - secretRef:
+                name: mysql-credentials
           readinessProbe:
             tcpSocket:
               port: 3306
             initialDelaySeconds: 10
             periodSeconds: 5
-
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-
   volumeClaimTemplates:
-  - metadata:
-      name: mysql-data
-    spec:
-      accessModes: 
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 2Gi
-      storageClassName: hostpath
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes:
+          - ReadWriteOnce  # Especificado correctamente como un array
+        resources:
+          requests:
+            storage: 2Gi
+        storageClassName: hostpath
